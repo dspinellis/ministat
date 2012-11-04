@@ -7,19 +7,19 @@
  * ----------------------------------------------------------------------------
  *
  */
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
-
-#include <stdio.h>
-#include <math.h>
-#include <err.h>
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/ioctl.h>
 #include <sys/queue.h>
-#include <sys/ttycom.h>
+
+
+#include <err.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+#include <asm-generic/ioctls.h>
+#include <asm-generic/termios.h>
+#include <stropts.h>
 
 #define NSTUDENT 100
 #define NCONF 6
