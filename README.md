@@ -1,7 +1,9 @@
 # ministat
 A small tool to do the statistics legwork on benchmarks etc.
 
-Written by Poul-Henning Kamp, lured into a dark Linux alley and clubbed over the head and hauled away to Github by yours truly.
+Written by Poul-Henning Kamp, lured into a dark Linux alley and clubbed over the head and hauled away to Github by Thordur Bjornsson.
+This version includes additional improvements introduced in the FreeBSD
+version from 2009 onward and a fix that allows handling huge files.
 
 ## Build & Install
 
