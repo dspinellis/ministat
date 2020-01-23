@@ -142,9 +142,9 @@ static char symbol[MAX_DS] = { ' ', 'x', '+', '*', '%', '#', '@', 'O' };
 struct dataset {
 	char *name;
 	double	*points;
-	unsigned lpoints;
+	size_t lpoints;
 	double sy, syy;
-	unsigned n;
+	size_t n;
 };
 
 static struct dataset *
@@ -242,7 +242,7 @@ static void
 Vitals(struct dataset *ds, int flag)
 {
 
-	printf("%c %3d %13.8g %13.8g %13.8g %13.8g %13.8g", symbol[flag],
+	printf("%c %3zu %13.8g %13.8g %13.8g %13.8g %13.8g", symbol[flag],
 	    ds->n, Min(ds), Max(ds), Median(ds), Avg(ds), Stddev(ds));
 	printf("\n");
 }
@@ -252,7 +252,7 @@ Relative(struct dataset *ds, struct dataset *rs, int confidx)
 {
 	double spool, s, d, e, t;
 	double re;
-	int i;
+	size_t i;
 
 	i = ds->n + rs->n - 2;
 	if (i > NSTUDENT)
@@ -290,7 +290,7 @@ struct plot {
 	int		width;
 
 	double		x0, dx;
-	int		height;
+	size_t		height;
 	char		*data;
 	char		**bar;
 	int		separate_bars;
@@ -343,8 +343,9 @@ static void
 PlotSet(struct dataset *ds, int val)
 {
 	struct plot *pl;
-	int i, j, m, x;
-	unsigned n;
+	int i, x;
+	size_t m, j;
+	size_t n;
 	int bar;
 
 	pl = &plot;
@@ -370,6 +371,7 @@ PlotSet(struct dataset *ds, int val)
 	m = 1;
 	i = -1;
 	j = 0;
+	/* Set m to max(j) + 1, to allocate required memory */
 	for (n = 0; n < ds->n; n++) {
 		x = (ds->points[n] - pl->x0) / pl->dx;
 		if (x == i) {
@@ -387,8 +389,8 @@ PlotSet(struct dataset *ds, int val)
 		assert(pl->data != NULL);
 		memset(pl->data + pl->height * pl->width, 0,
 		    (m - pl->height) * pl->width);
+		pl->height = m;
 	}
-	pl->height = m;
 	i = -1;
 	for (n = 0; n < ds->n; n++) {
 		x = (ds->points[n] - pl->x0) / pl->dx;
